@@ -120,10 +120,9 @@ public class Note implements Parcelable {
         Note note = (Note) o;
         return id == note.id &&
                 title.equals(note.title) &&
-                Objects.equals(content, note.content) &&
-                Objects.equals(timestamp, note.timestamp);
+                Objects.equals(content, note.content);
     }
-    
+
     @Override
     public int describeContents() {
         return 0;
