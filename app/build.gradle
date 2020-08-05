@@ -34,11 +34,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // -------- INSTRUMENTATION TESTS (use JUnit4)
-    androidTestImplementation 'junit:junit:4.13'
+    androidTestImplementation 'junit:junit:4.12'
 
     // AndroidX test
     def androidx_test_version = "1.1.0"
@@ -100,4 +100,10 @@ dependencies {
     // RxAndroid
     def rxandroid_version = '2.1.1'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
+    // Rx-Retrofit Call Adapter
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version"
+    // Retrofit call adapter
+
 }
