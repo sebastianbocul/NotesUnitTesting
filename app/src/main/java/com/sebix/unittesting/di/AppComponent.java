@@ -4,12 +4,14 @@ import android.app.Application;
 
 import com.sebix.unittesting.BaseApplication;
 
-import dagger.Binds;
+import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 
+@Singleton
 @Component(
         modules = {
                 AndroidInjectionModule.class,
@@ -19,10 +21,8 @@ import dagger.android.AndroidInjector;
         }
 )
 public interface AppComponent extends AndroidInjector<BaseApplication> {
-
     @Component.Builder
-    interface  Builder{
-
+    interface Builder {
         @BindsInstance
         Builder application(Application application);
 

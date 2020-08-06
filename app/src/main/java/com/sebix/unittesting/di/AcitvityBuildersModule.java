@@ -1,6 +1,6 @@
 package com.sebix.unittesting.di;
 
-import com.sebix.unittesting.NotesListActivity;
+import com.sebix.unittesting.ui.NotesList.NotesListActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

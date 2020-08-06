@@ -1,8 +1,5 @@
-package com.sebix.util;
+package com.sebix.unittesting.util;
 
-import com.sebix.unittesting.util.DateUtil;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestReporter;

@@ -1,10 +1,6 @@
-package com.sebix.models;
+package com.sebix.unittesting.models;
 
-import com.sebix.unittesting.models.Note;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Not;
 
 import static org.junit.jupiter.api.Assertions.*;
 
