@@ -3,7 +3,7 @@ package com.sebix.unittesting.di;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.sebix.unittesting.ui.NotesList.NotesListViewModel;
+import com.sebix.unittesting.ui.noteslist.NotesListViewModel;
 import com.sebix.unittesting.ui.note.NoteViewModel;
 import com.sebix.unittesting.viewmodels.ViewModelProviderFactory;
 

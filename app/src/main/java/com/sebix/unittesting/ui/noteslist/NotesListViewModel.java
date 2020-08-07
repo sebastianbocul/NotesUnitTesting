@@ -1,4 +1,4 @@
-package com.sebix.unittesting.ui.NotesList;
+package com.sebix.unittesting.ui.noteslist;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
