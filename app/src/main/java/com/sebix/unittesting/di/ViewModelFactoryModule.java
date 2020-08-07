@@ -3,6 +3,7 @@ package com.sebix.unittesting.di;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.sebix.unittesting.ui.NotesList.NotesListViewModel;
 import com.sebix.unittesting.ui.note.NoteViewModel;
 import com.sebix.unittesting.viewmodels.ViewModelProviderFactory;
 
@@ -19,4 +20,10 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(NoteViewModel.class)
     public abstract ViewModel bindNoteViewModel(NoteViewModel noteViewModel);
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotesListViewModel.class)
+    public abstract ViewModel bindNotesListViewModel(NotesListViewModel notesListViewModel);
 }

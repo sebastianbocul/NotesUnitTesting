@@ -21,6 +21,7 @@ import static com.sebix.unittesting.repository.NoteRepository.NOTE_TITLE_NULL;
 public class NoteViewModel extends ViewModel {
     public static final String TAG = "NoteViewModel";
     public static final String NO_CONTNENT_ERROR = "Can't save note with no content";
+
     public enum ViewState {VIEW, EDIT}
 
     ;
@@ -40,16 +41,16 @@ public class NoteViewModel extends ViewModel {
     public LiveData<Resource<Integer>> insertNote() throws Exception {
         return LiveDataReactiveStreams.fromPublisher(
                 noteRepository.insertNote(note.getValue())
-                .doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        insertSubscription=subscription;
-                    }
-                })
+                        .doOnSubscribe(new Consumer<Subscription>() {
+                            @Override
+                            public void accept(Subscription subscription) throws Exception {
+                                insertSubscription = subscription;
+                            }
+                        })
         );
     }
 
-    public LiveData<Resource<Integer>> updateNote() throws Exception{
+    public LiveData<Resource<Integer>> updateNote() throws Exception {
         return LiveDataReactiveStreams.fromPublisher(
                 noteRepository.updateNote(note.getValue())
                         .doOnSubscribe(new Consumer<Subscription>() {
@@ -60,7 +61,6 @@ public class NoteViewModel extends ViewModel {
                         })
         );
     }
-
 
     public LiveData<Note> observeNote() {
         return note;
@@ -85,14 +85,12 @@ public class NoteViewModel extends ViewModel {
         this.isNewNote = isNewNote;
     }
 
-    public LiveData<Resource<Integer>> saveNote() throws  Exception{
-        if(!shouldAllowSave()){
+    public LiveData<Resource<Integer>> saveNote() throws Exception {
+        if (!shouldAllowSave()) {
             throw new Exception(NO_CONTNENT_ERROR);
         }
-
         cancelPendingTransactions();
-
-        return new NoteInsertUpdateHelper<Integer>(){
+        return new NoteInsertUpdateHelper<Integer>() {
             @Override
             public void setNoteId(int noteId) {
                 isNewNote = false;
@@ -103,80 +101,82 @@ public class NoteViewModel extends ViewModel {
 
             @Override
             public LiveData<Resource<Integer>> getAction() throws Exception {
-                if(isNewNote){
-                    return  insertNote();
-                }else {
+                if (isNewNote) {
+                    return insertNote();
+                } else {
                     return updateNote();
                 }
             }
 
             @Override
             public String defineAction() {
-                if(isNewNote){
+                if (isNewNote) {
                     return ACTION_INSERT;
-                }else {
+                } else {
                     return ACTION_UPDATE;
                 }
             }
 
             @Override
             public void onTransactionComplete() {
-                updateSubscription=null;
-                insertSubscription=null;
+                updateSubscription = null;
+                insertSubscription = null;
             }
         }.getAsLiveData();
     }
 
-    public void cancelPendingTransactions(){
-        if(insertSubscription!=null){
+    public void cancelPendingTransactions() {
+        if (insertSubscription != null) {
             cancelInsertTransaction();
         }
-        if(updateSubscription!=null){
+        if (updateSubscription != null) {
             cancelUpdateTransaction();
         }
     }
 
-    private boolean shouldAllowSave(){
-        return removeWhiteSpace(note.getValue().getContent()).length() >0;
+    private boolean shouldAllowSave() throws Exception {
+        try {
+            return removeWhiteSpace(note.getValue().getContent()).length() > 0;
+        } catch (NullPointerException e) {
+            throw new Exception(NO_CONTNENT_ERROR);
+        }
     }
 
-    public void cancelUpdateTransaction(){
+    public void cancelUpdateTransaction() {
         updateSubscription.cancel();
-        updateSubscription=null;
+        updateSubscription = null;
     }
 
-    public void cancelInsertTransaction(){
+    public void cancelInsertTransaction() {
         insertSubscription.cancel();
-        insertSubscription=null;
+        insertSubscription = null;
     }
 
-    public void updateNote(String title, String content) throws Exception{
-        if(title == null || title.equals("")){
+    public void updateNote(String title, String content) throws Exception {
+        if (title == null || title.equals("")) {
             throw new NullPointerException("Title can't be null");
         }
         String temp = removeWhiteSpace(content);
-        if(temp.length() > 0){
+        if (temp.length() > 0) {
             Note updatedNote = new Note(note.getValue());
             updatedNote.setTitle(title);
             updatedNote.setContent(content);
             updatedNote.setTimestamp(DateUtil.getCurrentTimeStamp());
-
             note.setValue(updatedNote);
         }
     }
 
-    private String removeWhiteSpace(String string){
+    private String removeWhiteSpace(String string) {
         string = string.replace("\n", "");
         string = string.replace(" ", "");
         return string;
     }
 
-    public boolean shouldNavigateBack(){
-        if(viewState.getValue()==ViewState.VIEW){
+    public boolean shouldNavigateBack() {
+        if (viewState.getValue() == ViewState.VIEW) {
             return true;
-        }else {
+        } else {
             return false;
         }
-
     }
 }
